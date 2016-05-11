@@ -1,0 +1,11 @@
+ext {
+    minSdkVersion = 9
+    sampleMinSdkVersion = 14
+    compileSdkVersion = 23
+    targetSdkVersion = 23
+    buildToolsVersion = '23.0.3'
+
+    supportV4 = 'com.android.support:support-v4:23.3.0'
+
+    junit4 = 'junit:junit:4.12'
+}
