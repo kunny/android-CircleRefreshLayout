@@ -17,10 +17,7 @@
 
 package com.androidhuman.circlerefreshlayout;
 
-import android.view.animation.Interpolator;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.Transformation;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -32,13 +29,18 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.Transformation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -46,8 +48,6 @@ import java.util.ArrayList;
 
 /**
  * Fancy progress indicator for Material theme.
- *
- * @hide
  */
 class MaterialProgressDrawable extends Drawable implements Animatable {
 
@@ -72,7 +72,8 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     // Maps to ProgressBar default style
     private static final int CIRCLE_DIAMETER = 40;
 
-    private static final float CENTER_RADIUS = 8.75f; //should add up to 10 when + stroke_width
+    //should add up to 10 when + stroke_width
+    private static final float CENTER_RADIUS = 8.75f;
 
     private static final float STROKE_WIDTH = 2.5f;
 
@@ -82,10 +83,6 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final float CENTER_RADIUS_LARGE = 12.5f;
 
     private static final float STROKE_WIDTH_LARGE = 3f;
-
-    private final int[] COLORS = new int[]{
-            Color.BLACK
-    };
 
     /**
      * The value in the linear interpolator for animating the drawable at which
@@ -145,7 +142,7 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
         mResources = context.getResources();
 
         mRing = new Ring(mCallback);
-        mRing.setColors(COLORS);
+        mRing.setColors(new int[]{ Color.BLACK });
 
         updateSizes(DEFAULT);
         setupAnimators();
@@ -259,6 +256,8 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     public int getAlpha() {
+        // Note: This overrides getAlpha() which was added since API 19,
+        // but just returns Ring's alpha which is available throughout all API levels.
         return mRing.getAlpha();
     }
 
@@ -286,8 +285,8 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     @Override
     public boolean isRunning() {
         final ArrayList<Animation> animators = mAnimators;
-        final int N = animators.size();
-        for (int i = 0; i < N; i++) {
+        final int n = animators.size();
+        for (int i = 0; i < n; i++) {
             final Animation animator = animators.get(i);
             if (animator.hasStarted() && !animator.hasEnded()) {
                 return true;
@@ -341,10 +340,10 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
         int endG = (endInt >> 8) & 0xff;
         int endB = endInt & 0xff;
 
-        return (int) ((startA + (int) (fraction * (endA - startA))) << 24) |
-                (int) ((startR + (int) (fraction * (endR - startR))) << 16) |
-                (int) ((startG + (int) (fraction * (endG - startG))) << 8) |
-                (int) ((startB + (int) (fraction * (endB - startB))));
+        return (int) ((startA + (int) (fraction * (endA - startA))) << 24)
+                | (int) ((startR + (int) (fraction * (endR - startR))) << 16)
+                | (int) ((startG + (int) (fraction * (endG - startG))) << 8)
+                | (int) ((startB + (int) (fraction * (endB - startB))));
     }
 
     /**
@@ -404,11 +403,11 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
                         // scale the interpolatedTime so that the full
                         // transformation from 0 - 1 takes place in the
                         // remaining time
-                        final float scaledTime = (interpolatedTime)
+                        final float scaledTime = interpolatedTime
                                 / (1.0f - START_TRIM_DURATION_OFFSET);
                         final float startTrim = startingTrim
-                                + ((MAX_PROGRESS_ARC - minProgressArc) * MATERIAL_INTERPOLATOR
-                                .getInterpolation(scaledTime));
+                                + (MAX_PROGRESS_ARC - minProgressArc)
+                                * MATERIAL_INTERPOLATOR.getInterpolation(scaledTime);
                         ring.setStartTrim(startTrim);
                     }
 
@@ -429,8 +428,8 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
                     final float rotation = startingRotation + (0.25f * interpolatedTime);
                     ring.setRotation(rotation);
 
-                    float groupRotation = ((FULL_ROTATION / NUM_POINTS) * interpolatedTime)
-                            + (FULL_ROTATION * (mRotationCount / NUM_POINTS));
+                    float groupRotation = (FULL_ROTATION / NUM_POINTS) * interpolatedTime
+                            + FULL_ROTATION * (mRotationCount / NUM_POINTS);
                     setRotation(groupRotation);
                 }
             }
@@ -462,7 +461,7 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
                     animation.setDuration(ANIMATION_DURATION);
                     ring.setShowArrow(false);
                 } else {
-                    mRotationCount = (mRotationCount + 1) % (NUM_POINTS);
+                    mRotationCount = (mRotationCount + 1) % NUM_POINTS;
                 }
             }
         });
@@ -611,8 +610,7 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
                 // been fixed as of API 21.
                 mArrow.moveTo(0, 0);
                 mArrow.lineTo(mArrowWidth * mArrowScale, 0);
-                mArrow.lineTo((mArrowWidth * mArrowScale / 2), (mArrowHeight
-                        * mArrowScale));
+                mArrow.lineTo(mArrowWidth * mArrowScale / 2, mArrowHeight * mArrowScale);
                 mArrow.offset(x - inset, y);
                 mArrow.close();
                 // draw a triangle

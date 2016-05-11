@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.androidhuman.circlerefreshlayout.SwipeRefreshLayout
+    android:id="@+id/srl_activity_webview_refresh"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <WebView
+        android:id="@+id/wv_activity_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.androidhuman.circlerefreshlayout.SwipeRefreshLayout>

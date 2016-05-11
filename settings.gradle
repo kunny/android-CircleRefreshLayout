@@ -1,1 +1,1 @@
-include ':circlerefreshlayout'
+include ':circlerefreshlayout', ':circlerefreshlayout-sample'
