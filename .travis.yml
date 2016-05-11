@@ -16,7 +16,7 @@ script:
   - ./gradlew checkstyle "$MODULE:build"
 
 after_success:
-  - ./deploy_snapshot.sh
+  - .buildscript/deploy_snapshot.sh
 
 env:
   matrix:
