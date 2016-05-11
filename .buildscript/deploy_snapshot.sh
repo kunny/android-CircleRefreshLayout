@@ -19,7 +19,7 @@ elif [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
   echo "Skipping snapshot deployment: was pull request."
 elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
   echo "Skipping snapshot deployment: wrong branch. Expected '$BRANCH' but was '$TRAVIS_BRANCH'."
-elif [ "$MODULE" == "circlerefreshlayout-sample"]; then
+elif [ "$MODULE" == "circlerefreshlayout-sample" ]; then
   echo "Skipping snapshot deployment: sample app"
 else
   echo "Deploying snapshot..."
