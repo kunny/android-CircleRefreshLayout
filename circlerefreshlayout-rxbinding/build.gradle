@@ -24,3 +24,5 @@ dependencies {
 
     testCompile rootProject.ext.junit4
 }
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
