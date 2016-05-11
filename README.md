@@ -1,4 +1,4 @@
-# android-CircleRefreshLayout
+# android-CircleRefreshLayout ![Build status](https://travis-ci.org/kunny/android-CircleRefreshLayout.svg?branch=master)
 
 A customized SwipeRefreshLayout that supports circular refresh indicator and pull-down to refresh.
 
