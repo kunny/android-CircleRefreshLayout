@@ -3,10 +3,10 @@ sudo: false
 
 android:
   components:
-    - build-tools-23.0.3
-    - android-23
     - platform-tools
     - tools
+    - build-tools-23.0.3
+    - android-23
     - extra-android-m2repository
 
 jdk:
