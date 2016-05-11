@@ -1,1 +1,1 @@
-include ':circlerefreshlayout', ':circlerefreshlayout-sample'
+include ':circlerefreshlayout', ':circlerefreshlayout-rxbinding', ':circlerefreshlayout-sample'

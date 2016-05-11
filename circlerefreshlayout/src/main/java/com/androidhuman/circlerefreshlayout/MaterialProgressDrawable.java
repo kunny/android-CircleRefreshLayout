@@ -17,7 +17,6 @@
 
 package com.androidhuman.circlerefreshlayout;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -33,7 +32,6 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -142,7 +140,7 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
         mResources = context.getResources();
 
         mRing = new Ring(mCallback);
-        mRing.setColors(new int[]{ Color.BLACK });
+        mRing.setColors(new int[]{Color.BLACK});
 
         updateSizes(DEFAULT);
         setupAnimators();
