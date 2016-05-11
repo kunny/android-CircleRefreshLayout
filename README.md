@@ -41,6 +41,8 @@ layout.setPullPosition(Gravity.TOP);
 
 ## Download
 
+### Stable
+
 Core:
 ```groovy
 compile 'com.androidhuman.circlerefreshlayout:circlerefreshlayout:0.1.0'
@@ -49,6 +51,19 @@ compile 'com.androidhuman.circlerefreshlayout:circlerefreshlayout:0.1.0'
 RxBinding support:
 ```groovy
 compile 'com.androidhuman.circlerefreshlayout:circlerefreshlayout-rxbinding:0.1.0'
+```
+
+### Development Snapshot
+Snapshots of the development version are available in [Sonatype's `snapshots` repository](https://oss.sonatype.org/content/repositories/snapshots/).
+
+Core:
+```groovy
+compile 'com.androidhuman.circlerefreshlayout:circlerefreshlayout:0.1.0-SNAPSHOT'
+```
+
+RxBinding support:
+```groovy
+compile 'com.androidhuman.circlerefreshlayout:circlerefreshlayout-rxbinding:0.1.0-SNAPSHOT'
 ```
 
 ## License
