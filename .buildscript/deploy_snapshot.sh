@@ -19,8 +19,10 @@ elif [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
   echo "Skipping snapshot deployment: was pull request."
 elif [ "$TRAVIS_BRANCH" != "$BRANCH" ]; then
   echo "Skipping snapshot deployment: wrong branch. Expected '$BRANCH' but was '$TRAVIS_BRANCH'."
+elif [ "$MODULE" == "circlerefreshlayout-sample"]; then
+  echo "Skipping snapshot deployment: sample app"
 else
   echo "Deploying snapshot..."
-  ./gradlew clean uploadArchives
+  ./gradlew clean "$MODULE:uploadArchives"
   echo "Snapshot deployed!"
 fi
